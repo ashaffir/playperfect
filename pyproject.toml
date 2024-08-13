@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "playperfect"
+version = "0.1.0"
+description = "home assignment"
+authors = ["alfred shaffir <alfred.shaffir@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+dbt-bigquery = "^1.8.2"
+ipython = "^8.26.0"
+pandas = "^2.2.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,6 @@
+raw*
+notes.md
+.venv
+.DS*
+dbt
+*.json
