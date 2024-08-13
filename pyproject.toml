@@ -10,6 +10,10 @@ python = "^3.11"
 dbt-bigquery = "^1.8.2"
 ipython = "^8.26.0"
 pandas = "^2.2.2"
+fastapi = "^0.112.0"
+uvicorn = "^0.30.6"
+flask = "^3.0.3"
+gunicorn = "^23.0.0"
 
 
 [build-system]
