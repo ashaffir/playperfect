@@ -12,7 +12,7 @@
 - [Cloud Compute](https://console.cloud.google.com/compute/instances?authuser=1&project=playperfect-432410)
 
 ## Architecture
-![Solution Architecture](./playperfect-architecture-pipeline.png)
+![Solution Architecture](./playperfect-architecture-pipeline.jpg)
 
 ### Data Manager
 Loading the data from the paruqet files to the BigQuery, and trigger its copy to Google Spanner storage.
