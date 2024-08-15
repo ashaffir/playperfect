@@ -41,7 +41,7 @@ So, I switched to Function, which gave much better results.
 
 #### Notes:
 - As you can see, though there are much more than 100 RPS (required), the response time seen is 350ms on the 95th percentile.
-This would be mostly a network latency, rather than the app response which is much lower as seen in the logs. The averaging seem to be below the 50ms marker (this should be verified...). 
+This would be mostly a network latency, rather than the app response which is much lower as seen in the logs. The average seem to be below the 50ms marker (this should be verified...). 
 
 
 ## To Do
