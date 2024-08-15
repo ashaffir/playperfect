@@ -12,7 +12,7 @@
 - [Cloud Compute](https://console.cloud.google.com/compute/instances?authuser=1&project=playperfect-432410)
 
 ## Architecture
-![Solution Architecture](./playperfect-architecture-pipeline.jpg)
+![Solution Architecture](./playperfect-architecture.jpg)
 
 ### Data Manager
 Loading the data from the paruqet files to the BigQuery, and trigger its copy to Google Spanner storage.
@@ -27,16 +27,17 @@ Handles requests from clients.
 The implementation of the API layer was initially done with a VM (get_user_attribute_spanner_vm.py), which resulted with poor performance. 
 So, I switched to Function, which gave much better results.
 
+
+## Performance
+* The image below is a screenshot of the locust run.
 ![API Performance](./api-performance.jpg)
 
-* The image is a screenshot of the locust run.
+* The image below is the function logs
+![Inner look](./api-logs.jpg)
 
 #### Notes:
 - As you can see, though there are much more than 100 RPS (required), the response time is 350ms on the 95th percentile.
-This would be, to my opnion, a network latency, rather than the app response which measured . 
-
-
-## Performance
+This would be mostly a network latency, rather than the app response which measured which is clearly seen in the logs. 
 
 
 ## To Do
