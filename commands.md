@@ -42,5 +42,11 @@ gcloud functions call migration_manager --data '{}' \
 gcloud functions call migrate_chunk --data '{"start_row":0,"chunk_size":10000}' \
     --project="playperfect-432410" --region="us-central1"
 
-* Debug
-gcloud functions logs read migration_manager
+* Logs
+gcloud functions logs read migrate_chunk --region=us-central1 --limit 10
+gcloud functions logs read migration_manager --region=us-central1 
+
+* Spanner
+gcloud spanner databases execute-sql players_cloned_db \
+    --instance="players" \
+    --sql="SELECT COUNT(*) AS total_rows FROM user_panel"

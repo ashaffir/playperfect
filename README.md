@@ -17,10 +17,14 @@
 ### Data Manager
 Loading the data from the paruqet files to the BigQuery, and trigger its copy to Google Spanner storage.
 
+* A Scheduler is set to run the update_user_panel function every 4 hours.
+* Once finish update the user_panel table, the app triggers the migration_manager
+
 ### Migration Manager
 Handles the migration of the data from BigQuery to the Google Spanner.
 * Migration manager receives the trigger from the data manager, splits the data to chunks and runs multiple services in parallel to load it to the spanner.
 * Migrate Chunk function receives the information to load to the spanner.
+* Loading the data supplied, 100K rows, from the BigQuery to the Spanner, using the default setup of 10 concurrent migrators, takes approximately 30 sec. This can be adjusted to accommodate the growth of users.
 
 ### API Layer
 Handles requests from clients.
@@ -36,11 +40,13 @@ So, I switched to Function, which gave much better results.
 ![Inner look](./api-logs.jpg)
 
 #### Notes:
-- As you can see, though there are much more than 100 RPS (required), the response time is 350ms on the 95th percentile.
-This would be mostly a network latency, rather than the app response which measured which is clearly seen in the logs. 
+- As you can see, though there are much more than 100 RPS (required), the response time seen is 350ms on the 95th percentile.
+This would be mostly a network latency, rather than the app response which much lower as clearly seen in the logs, which looks like avereging below the 50ms marker (this should be verified...). 
 
 
 ## To Do
+In addition to some TODOs in the code, here are a few more general stuff that need to be addressed.
+
 ### Operations
 * Proper application run
   Currently the API is running from within a Tmux session so that it wont stop then the SSH is closed. 
@@ -51,4 +57,6 @@ This would be mostly a network latency, rather than the app response which measu
   
 ### DevOps/IT
 * Security
-- Clean up permissions and roles
+- To save time on mingling with the GCP permissions/roles/IAM, I've decided to set the apps have permissions to be run by "allUsers". This, of course, should be modified to adhere with production standards.
+
+* Setup CI/CD (preferably Github Actions)

@@ -7,7 +7,7 @@ from google.cloud import exceptions
 
 @functions_framework.http
 def migrate_chunk(request):
-    """HTTP Cloud Function that migrates a chunk of data from BigQuery to Cloud Spanner with error handling."""
+    """HTTP Cloud Function that migrates a chunk of data from BigQuery to Cloud Spanner."""
 
     start = time.perf_counter()
 
@@ -68,7 +68,7 @@ def migrate_chunk(request):
 
     try:
         with database.batch() as batch:
-            batch.insert(
+            batch.insert_or_update(
                 table="user_panel",
                 columns=(
                     "player_id",
@@ -80,6 +80,9 @@ def migrate_chunk(request):
                 ),
                 values=rows_to_insert,
             )
+    except exceptions.AlreadyExists as e:
+        logging.warning(f"Some rows already exist and were not inserted: {str(e)}")
+        return f"Partial success: Some rows already existed and were skipped.", 200
     except exceptions.GoogleAPICallError as e:
         logging.error(f"Failed to insert data into Spanner: {str(e)}")
         return f"Failed to insert data into Spanner: {str(e)}", 500
@@ -91,6 +94,6 @@ def migrate_chunk(request):
         return f"Unexpected error during Spanner operation: {str(e)}", 500
 
     logging.info(
-        f"Chunk migration at row {start_row} completed in {time.perf_counter() - start:.2f} seconds"
+        f"Successfully migrated chunk starting at row {start_row} after {time.perf_counter() - start:.3f} seconds"
     )
     return f"Successfully migrated chunk starting at row {start_row}", 200

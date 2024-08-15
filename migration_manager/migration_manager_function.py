@@ -14,9 +14,11 @@ THROTTLE_TIME = 0.1
 
 @functions_framework.http
 def migration_manager(request):
-    """HTTP Cloud Function that splits data into chunks and triggers parallel migrations with error handling."""
+    """HTTP Cloud Function that splits data into chunks and triggers parallel migrations."""
 
     start = time.perf_counter()
+
+    logging.info("Migration Manager triggered")
 
     bq_client = bigquery.Client()
 
@@ -73,12 +75,12 @@ def migration_manager(request):
                 THROTTLE_TIME
             )  # Throttle requests slightly, might not be necessary
 
-    # Log errors if any occurred
     if errors:
+        # TODO: Implement retry mechanism of failing migration processes.
         logging.error(f"Migration encountered errors: {errors}")
         return {"message": "Migration completed with errors.", "errors": errors}, 500
 
     logging.info(
-        f"Migration completed successfully in {time.perf_counter() - start:.2f} seconds."
+        f"Migration completed successfully in {time.perf_counter() - start:.3f} seconds."
     )
     return "Migration Manager triggered all chunks successfully.", 200
