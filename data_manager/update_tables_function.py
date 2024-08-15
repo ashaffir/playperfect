@@ -6,8 +6,10 @@ from google.cloud import bigquery
 
 @functions_framework.http
 def update_tables(request):
-    """ Update the tables in BigQuery with new data from GCS."""
+    """Update the tables in BigQuery with new data from GCS."""
+
     logging.info("Start updating the tables.")
+
     client = bigquery.Client()
     client = bigquery.Client(project="playperfect-432410")
 
@@ -179,15 +181,15 @@ def update_tables(request):
 
     # Trigger the migration manager
     try:
-        migration_manager_url = 'https://us-central1-playperfect-432410.cloudfunctions.net/migration_manager'
+        migration_manager_url = "https://us-central1-playperfect-432410.cloudfunctions.net/migration_manager"
         response = requests.post(migration_manager_url, json={})
         if response.status_code == 200:
-            logging.info('Migration Manager triggered successfully.')
+            logging.info("Migration Manager triggered successfully.")
         else:
-            logging.error(f'Failed to trigger Migration Manager: {response.text}')
-            return f'Failed to trigger Migration Manager: {response.text}', 500
+            logging.error(f"Failed to trigger Migration Manager: {response.text}")
+            return f"Failed to trigger Migration Manager: {response.text}", 500
     except Exception as e:
-        logging.error(f'Error triggering Migration Manager: {str(e)}')
-        return f'Error triggering Migration Manager: {str(e)}', 500
+        logging.error(f"Error triggering Migration Manager: {str(e)}")
+        return f"Error triggering Migration Manager: {str(e)}", 500
 
-    return 'BigQuery table updated and Migration Manager triggered successfully.', 200
+    return "BigQuery table updated and Migration Manager triggered successfully.", 200

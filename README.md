@@ -24,7 +24,7 @@ Loading the data from the paruqet files to the BigQuery, and trigger its copy to
 Handles the migration of the data from BigQuery to the Google Spanner.
 * Migration manager receives the trigger from the data manager, splits the data to chunks and runs multiple services in parallel to load it to the spanner.
 * Migrate Chunk function receives the information to load to the spanner.
-* Loading the data supplied, 100K rows, from the BigQuery to the Spanner, using the default setup of 10 concurrent migrators, takes approximately 30 sec. This can be adjusted to accommodate the growth of users.
+* Loading the data supplied, 100K rows, from the BigQuery to the Spanner, using the default setup of 10 concurrent migrators and 10K chunk size, takes approximately 30 sec. This can be adjusted to accommodate the growth of users.
 
 ### API Layer
 Handles requests from clients.
