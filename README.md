@@ -27,6 +27,9 @@ Handles requests from clients.
 This code runs in a VM.
 
 ## To Do
+### Unit testing
+* Extend the simple tests to a more thorough tests that cover all relevant functionalities of each unit
+  
 ### DevOps/IT
 * Security
 - Clean up permissions and roles
