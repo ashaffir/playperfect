@@ -25,3 +25,8 @@ Handles the migration of the data from BigQuery to the Google Spanner.
 ### API Layer
 Handles requests from clients.
 This code runs in a VM.
+
+## To Do
+### DevOps/IT
+* Security
+- Clean up permissions and roles
