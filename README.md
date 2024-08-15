@@ -24,9 +24,27 @@ Handles the migration of the data from BigQuery to the Google Spanner.
 
 ### API Layer
 Handles requests from clients.
-This code runs in a VM.
+The implementation of the API layer was initially done with a VM (get_user_attribute_spanner_vm.py), which resulted with poor performance. 
+So, I switched to Function, which gave much better results.
+
+![API Performance](./api-performance.jpg)
+
+* The image is a screenshot of the locust run.
+
+#### Notes:
+- As you can see, though there are much more than 100 RPS (required), the response time is 350ms on the 95th percentile.
+This would be, to my opnion, a network latency, rather than the app response which measured . 
+
+
+## Performance
+
 
 ## To Do
+### Operations
+* Proper application run
+  Currently the API is running from within a Tmux session so that it wont stop then the SSH is closed. 
+  This should be modified for production level.
+
 ### Unit testing
 * Extend the simple tests to a more thorough tests that cover all relevant functionalities of each unit
   

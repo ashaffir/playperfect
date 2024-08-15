@@ -1,2 +1,3 @@
 locust
 google-cloud-spanner
+functions-framework
